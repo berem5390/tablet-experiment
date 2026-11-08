@@ -4,32 +4,57 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light" />
-<title>태블릿 입력 과제 연구 — 예비실험 v0.1</title>
+<title>태블릿 입력 과제 연구 — 예비실험 v0.2</title>
 <style>
 :root{--bg:#f5f7fa;--paper:#fff;--ink:#1d2936;--sub:#667688;--line:#dbe2e9;--main:#217d91;--soft:#e9f3f6;--danger:#a44b40;--shadow:0 10px 32px rgba(31,51,69,.055)}
 *{box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;color:var(--ink);background:var(--bg);-webkit-text-size-adjust:100%}body{margin:0;min-height:100vh}button,select,input,textarea{font:inherit}button{cursor:pointer;border-radius:12px;border:1px solid var(--line);padding:12px 16px;background:#fff;color:var(--ink);touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:disabled{opacity:.42;cursor:default}button.primary{background:var(--main);border-color:var(--main);color:#fff}button.secondary{background:var(--soft);border-color:#d4e8ed;color:#1b6576}button.ghost{background:transparent}button.danger{color:var(--danger)}input,select,textarea{width:100%;padding:11px 12px;border:1px solid #bdcbd6;border-radius:10px;background:#fff;color:var(--ink);font-size:15px}input:focus,select:focus,textarea:focus{outline:2px solid #77b2c0;outline-offset:1px}input[type=checkbox]{width:auto;accent-color:var(--main)}label{display:block;font-size:14px;color:#435465;margin-bottom:7px}h1{font-size:clamp(23px,3.5vw,32px);font-weight:600;line-height:1.36;letter-spacing:-.025em;margin:0 0 13px}h2{font-size:21px;font-weight:600;line-height:1.4;margin:0 0 15px}h3{font-size:16px;margin:15px 0 10px;font-weight:600}.muted{color:var(--sub)}.small{font-size:13px;line-height:1.6}.tiny{font-size:12px}.wrap{max-width:940px;margin:0 auto;padding:20px 16px 76px}.top{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:8px 3px 20px}.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--main);margin-bottom:5px}.brand{font-size:16px;font-weight:600}.pill{display:inline-block;padding:7px 11px;border-radius:100px;background:var(--soft);color:#1d6879;font-size:12px}.panel{background:var(--paper);border:1px solid #e4e9ee;box-shadow:var(--shadow);border-radius:18px;padding:clamp(18px,3.2vw,31px);margin-bottom:16px}.notice{background:#f3f7f9;border-left:3px solid #5a9bac;padding:13px 15px;border-radius:7px;line-height:1.65;font-size:14px}.warn{background:#fff7e8;border-left-color:#c89038}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 17px;margin-top:22px}.field{min-width:0}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:22px}.actions button{min-height:46px}.hidden{display:none!important}.progress{height:7px;background:#e6edf1;border-radius:100px;overflow:hidden;margin:8px 0 14px}.progress>div{height:100%;background:var(--main);transition:width .2s}.task-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.task-head .meta{text-align:right;font-size:13px;color:var(--sub)}.stimulus-label{font-size:13px;letter-spacing:.03em;color:#5c6b77;margin:20px 0 10px}.number-target{font-size:clamp(31px,6vw,52px);letter-spacing:.16em;font-variant-numeric:tabular-nums;text-align:center;border-radius:14px;background:#f3f6f8;padding:16px 8px;margin:0 0 16px}.numeric-zone{max-width:430px;margin:0 auto}.entry{min-height:65px;border:1.5px solid #b9c9d3;border-radius:13px;display:flex;justify-content:center;align-items:center;gap:4px;background:#fff;margin-bottom:15px;font-size:clamp(29px,5vw,37px);letter-spacing:.14em;font-variant-numeric:tabular-nums}.entry-placeholder{color:#b9c6ce}.keypad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.keypad button{height:clamp(54px,8vh,71px);font-size:26px;border:1px solid #d8e1e7;border-radius:13px;background:#f9fbfd;outline:none;user-select:none;-webkit-user-select:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:none}.keypad button:active,.keypad button:focus{background:#f9fbfd;outline:none;box-shadow:none}.keypad .delete{font-size:16px;background:#f0f3f7}.keypad .delete:active,.keypad .delete:focus{background:#f0f3f7}.keypad .blank{visibility:hidden}.drawing-wrap{max-width:850px;margin:0 auto}.drawing-container{border:1px solid #d3e0e7;border-radius:12px;background:#fbfdfe;overflow:hidden;position:relative}.drawing-container canvas{display:block;width:100%;height:auto;aspect-ratio:800/420;touch-action:none;-webkit-tap-highlight-color:transparent;user-select:none;cursor:crosshair}.status-line{min-height:25px;color:#566b76;font-size:13px;margin:12px 0 0}.survey-item{padding:16px 0;border-bottom:1px solid #e7edf1}.survey-item:last-child{border:0}.scale-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);gap:15px;margin:10px 0 6px}.radio-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.radio-grid label{margin:0;text-align:center;padding:6px 0;cursor:pointer}.radio-grid input{display:block;margin:0 auto 8px;min-width:20px;min-height:20px}.radio-grid span{font-size:15px}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.metric{border:1px solid var(--line);border-radius:12px;padding:15px;background:#fbfcfe}.metric strong{display:block;font-size:25px;font-weight:600;margin-top:5px}.file-status{font-size:13px;color:var(--sub);margin-top:8px}.stick{position:sticky;bottom:0;background:rgba(245,247,250,.96);backdrop-filter:blur(10px);padding:12px 15px;border-top:1px solid #dce4ea;margin:16px -16px -76px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px;color:var(--sub);z-index:5}.stick button{font-size:12px;padding:9px 12px}.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.foot-note{font-size:13px;color:var(--sub);line-height:1.65;margin:15px 0}.divider{height:1px;background:var(--line);margin:20px 0}ul{line-height:1.7;padding-left:21px} @media (max-width:620px){.form-grid{grid-template-columns:1fr}.wrap{padding:9px 11px 80px}.panel{padding:17px 14px}.task-head{flex-direction:column}.task-head .meta{text-align:left}.summary-grid{grid-template-columns:1fr 1fr}.number-target{letter-spacing:.1em}.stick{margin-left:-11px;margin-right:-11px}.radio-grid{gap:0}}
+
+
+/* On tablets, place the number display and keypad side-by-side.
+   This prevents the pinned navigation from covering keypad buttons. */
+@media (min-width:800px){
+ .numeric-zone{max-width:850px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 22px;align-items:start}
+ .numeric-zone>.stimulus-label:nth-child(1){grid-column:1;grid-row:1}
+ .numeric-zone>#num-target{grid-column:1;grid-row:2}
+ .numeric-zone>.stimulus-label:nth-child(3){grid-column:1;grid-row:3}
+ .numeric-zone>#num-entry{grid-column:1;grid-row:4}
+ .numeric-zone>.keypad{grid-column:2;grid-row:1 / span 5;align-self:start;margin-top:16px}
+ .numeric-zone .number-target{font-size:clamp(28px,3.2vw,42px);letter-spacing:.10em}
+ .numeric-zone .entry{font-size:clamp(26px,3vw,36px);min-height:60px}
+}
+/* v0.2: keep trial progression reachable without scrolling. */
+.required{color:var(--danger);font-size:12px;font-weight:500}
+.trial-nav{position:fixed;z-index:20;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(910px,calc(100% - 22px));display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 16px;background:rgba(255,255,255,.98);border:1px solid #cbdde4;border-radius:17px;box-shadow:0 7px 28px rgba(22,42,55,.17);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.trial-nav button{min-width:175px;min-height:51px;font-size:16px;font-weight:600;flex:none}
+.trial-nav button:disabled{background:#dae6e9;border-color:#dae6e9;color:#647782;opacity:1}
+body.on-trial .stick{display:none}
+body.on-trial #screen-trial{padding-bottom:100px}
+#pilot-settings{padding:11px 13px;border-radius:10px;background:#f4f7f8;border:1px solid #e0e9ed}#pilot-settings summary{cursor:pointer;color:var(--sub);font-size:13px}#pilot-settings[open] summary{margin-bottom:10px}#pilot-settings .form-grid{margin-top:8px}
+@media(max-width:620px){.trial-nav{padding:10px;gap:9px}.trial-nav button{min-width:136px;min-height:48px;font-size:15px}.trial-nav .small{font-size:12px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="top"><div><div class="eyebrow">인간공학실험 · 기능 검증용</div><div class="brand">태블릿 입력 과제 연구</div></div><span class="pill">예비실험 v0.1</span></header>
+<header class="top"><div><div class="eyebrow">인간공학실험 · 기능 검증용</div><div class="brand">태블릿 입력 과제 연구</div></div><span class="pill">예비실험 v0.2</span></header>
 <main>
 <section id="screen-start" class="panel">
-<h1>시각적 피드백 지연에 관한 태블릿 입력 과제</h1>
-<p class="muted">본 프로그램은 기술 검증과 예비실험을 위한 버전입니다. 숫자는 손가락으로, 경로는 호환 스타일러스로 입력해 주세요.</p>
+<h1>태블릿 입력 과제 사용자 경험 조사</h1>
+<p class="muted">태블릿 입력 과정의 사용자 경험을 확인하는 예비실험입니다. 숫자는 손가락으로, 경로는 화면 입력용 펜(터치펜)으로 입력해 주세요.</p>
 <div class="notice">결과는 자동으로 연구자에게 전송되지 않습니다. 실험 종료 후 반드시 <b>JSON 결과 파일</b>을 기기에 저장하고 연구자에게 전달해야 합니다. 이 버전의 데이터는 실제 연구 분석에 사용하기 전에 기능 검증이 필요합니다.</div>
 <div id="resume-box" class="notice warn hidden" style="margin-top:12px"><span id="resume-desc"></span><div class="actions"><button id="resume-btn" class="secondary">기존 예비실험 이어하기</button><button id="export-existing-btn">기존 기록 다운로드</button><button id="discard-btn" class="danger">새로 시작</button></div></div>
+<p class="small muted">참가자 ID는 프로그램이 자동으로 부여합니다. 필수 항목을 선택해 주세요.</p>
 <div class="form-grid">
-<div class="field"><label for="pid">참가자 ID</label><input id="pid" value="" placeholder="비우면 임의 ID 생성" autocomplete="off" /></div>
-<div class="field"><label for="age">연령대</label><select id="age"><option value="">선택하지 않음</option><option>20대</option><option>30대</option><option>40대</option><option>50대</option><option>60대 이상</option><option>18~19세</option></select></div>
-<div class="field"><label for="device">태블릿 기종</label><input id="device" placeholder="예: Galaxy Tab S9, iPad Air" autocomplete="off" /></div>
-<div class="field"><label for="stylus">사용 스타일러스</label><input id="stylus" placeholder="예: S Pen, Apple Pencil" autocomplete="off" /></div>
-<div class="field"><label for="tablet-freq">태블릿 사용 빈도</label><select id="tablet-freq"><option value="">선택</option><option>매일</option><option>주 3~6회</option><option>주 1~2회</option><option>월 1~3회</option><option>거의 사용하지 않음</option></select></div>
-<div class="field"><label for="pen-freq">스타일러스 사용 빈도</label><select id="pen-freq"><option value="">선택</option><option>매일</option><option>주 3~6회</option><option>주 1~2회</option><option>월 1~3회</option><option>거의 사용하지 않음</option></select></div>
-<div class="field"><label for="mode">진행 모드</label><select id="mode"><option value="quick">기능 검증, 6회 (각 조건 1회)</option><option value="full">전체 예비실험, 36회 (각 조건 6회)</option></select></div>
+<div class="field"><label for="adult">성인 여부 <span class="required">필수</span></label><select id="adult" required><option value="">선택해 주세요</option><option value="yes">만 19세 이상입니다</option><option value="no">만 19세 미만입니다</option></select></div>
+<div class="field"><label for="tablet-kind">사용 태블릿 종류 <span class="required">필수</span></label><select id="tablet-kind" required><option value="">선택해 주세요</option><option value="ipad">아이패드(iPad)</option><option value="galaxy">갤럭시 탭(Galaxy Tab)</option><option value="other">기타</option><option value="unknown">잘 모르겠음</option></select></div>
+<div class="field"><label for="device">태블릿 세부 기종 (선택)</label><input id="device" placeholder="예: iPad Pro 4세대, Galaxy Tab S9" autocomplete="off" /></div>
+<div class="field"><label for="pen-kind">사용하는 화면 입력용 펜(터치펜) 종류 <span class="required">필수</span></label><select id="pen-kind" required><option value="">선택해 주세요</option><option value="apple-pencil">애플 펜슬(Apple Pencil)</option><option value="s-pen">S펜(삼성)</option><option value="other">기타 터치펜</option><option value="unknown">잘 모르겠음</option></select></div>
+<div class="field"><label for="stylus">터치펜 세부 모델 (선택)</label><input id="stylus" placeholder="예: Apple Pencil 2세대" autocomplete="off" /></div>
+<div class="field"><label for="tablet-freq">평소 태블릿 사용 빈도 <span class="required">필수</span></label><select id="tablet-freq" required><option value="">선택해 주세요</option><option>거의 매일</option><option>일주일에 1~3일</option><option>한 달에 1~3일</option><option>거의 사용하지 않음</option></select></div>
+<div class="field"><label for="pen-freq">평소 터치펜 사용 빈도 <span class="required">필수</span></label><select id="pen-freq" required><option value="">선택해 주세요</option><option>거의 매일</option><option>일주일에 1~3일</option><option>한 달에 1~3일</option><option>거의 사용하지 않음</option></select></div>
+<div class="field" style="grid-column:1 / -1"><details id="pilot-settings"><summary>연구자용 설정 (예비실험 진행 순서)</summary><div class="form-grid"><div class="field"><label for="mode">진행 모드</label><select id="mode"><option value="full">전체 예비실험, 36회 (각 조건 6회)</option><option value="quick">기능 검증, 6회 (각 조건 1회)</option></select></div>
 <div class="field"><label for="task-order">과제 블록 순서</label><select id="task-order"><option value="random">임의 선택, 기록됨</option><option value="number">숫자 입력 → 경로 따라 그리기</option><option value="trace">경로 따라 그리기 → 숫자 입력</option></select></div>
 <div class="field"><label for="delay-1">첫 번째 과제 블록 지연 순서</label><select id="delay-1"><option value="random">임의 선택</option><option>0,100,200</option><option>0,200,100</option><option>100,0,200</option><option>100,200,0</option><option>200,0,100</option><option>200,100,0</option></select></div>
-<div class="field"><label for="delay-2">두 번째 과제 블록 지연 순서</label><select id="delay-2"><option value="random">임의 선택</option><option>0,100,200</option><option>0,200,100</option><option>100,0,200</option><option>100,200,0</option><option>200,0,100</option><option>200,100,0</option></select></div>
+<div class="field"><label for="delay-2">두 번째 과제 블록 지연 순서</label><select id="delay-2"><option value="random">임의 선택</option><option>0,100,200</option><option>0,200,100</option><option>100,0,200</option><option>100,200,0</option><option>200,0,100</option><option>200,100,0</option></select></div></div></details></div>
 </div>
 <div class="foot-note">순서 설정은 현재 시험용입니다. 두 번째 블록의 순서 결합과 본실험용 역균형법은 아직 확정하지 않았습니다. 참가자의 개인정보는 이름 대신 익명 ID로 기록해 주세요.</div>
 <label style="display:flex;align-items:center;gap:9px"><input type="checkbox" id="consent" /> 실험 안내를 읽었으며, 예비실험에 자발적으로 참여하는 데 동의합니다.</label>
@@ -49,10 +74,10 @@
 <button data-digit="7" type="button">7</button><button data-digit="8" type="button">8</button><button data-digit="9" type="button">9</button>
 <div class="blank"></div><button data-digit="0" type="button">0</button><button id="delete-key" type="button" class="delete">삭제</button>
 </div></div>
-<div id="trace-panel" class="drawing-wrap hidden"><div class="stimulus-label">회색 경로의 S에서 시작해 E까지 스타일러스로 따라 그리세요.</div>
+<div id="trace-panel" class="drawing-wrap hidden"><div class="stimulus-label">회색 경로의 S에서 시작해 E까지 터치펜으로 따라 그리세요.</div>
 <div class="drawing-container"><canvas id="trace-canvas" width="800" height="420" aria-label="경로 따라 그리기 영역"></canvas></div>
 <div class="actions" style="margin-top:13px"><button id="reset-stroke" type="button">다시 그리기</button></div><div id="trace-status" class="status-line"></div></div>
-<div class="actions"><button id="next-btn" class="primary" type="button" disabled>다음 시행</button><span class="small muted" id="next-note">수행을 마치면 버튼이 활성화됩니다.</span></div>
+<div id="trial-nav" class="trial-nav" role="group" aria-label="시행 진행"><span class="small muted" id="next-note" role="status">수행을 마치면 버튼이 활성화됩니다.</span><button id="next-btn" class="primary" type="button" disabled>다음 시행</button></div>
 <div id="debug-panel" class="small muted" style="margin-top:13px"></div>
 </section>
 <section id="screen-survey" class="panel hidden"><div class="eyebrow">조건별 경험 평가</div><h2>방금 수행한 과제를 평가해 주세요.</h2><p class="muted small">정답은 없습니다. 방금 경험을 기준으로 답해주세요.</p>
@@ -75,7 +100,7 @@
 </div>
 <script>
 (()=>{'use strict';
-const VERSION='0.1.0-pilot'; const STORAGE_KEY='ergolab_pilot_v01'; const W=800,H=420,POST_HOLD=400;
+const VERSION='0.2.0-pilot'; const STORAGE_KEY='ergolab_pilot_v02'; const W=800,H=420,POST_HOLD=400;
 const digits=['284987','257296','721359','532183','198753','489124'];
 const delayPermutations=[[0,100,200],[0,200,100],[100,0,200],[100,200,0],[200,0,100],[200,100,0]];
 const variants=[{amp:.205,skew:0,phase:0,sign:1},{amp:.198,skew:.020,phase:.018,sign:-1},{amp:.211,skew:-.021,phase:-.012,sign:1},{amp:.202,skew:.015,phase:-.020,sign:-1},{amp:.207,skew:-.016,phase:.012,sign:1},{amp:.200,skew:0,phase:.022,sign:-1}];
@@ -87,15 +112,15 @@ function secureId(){let x='';if(window.crypto&&crypto.getRandomValues){let a=new
 function getStorage(){try{const k=STORAGE_KEY+'__test';localStorage.setItem(k,'1');localStorage.removeItem(k);return true}catch(e){return false}}
 function persist(){if(!data)return;data.lastSavedAt=new Date().toISOString();if(storageAvailable){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));$('autosave-label').textContent='이 기기에 임시 저장 중 · '+new Date().toLocaleTimeString('ko-KR');return}catch(e){storageAvailable=false}}$('autosave-label').textContent='임시 저장 불가 · 결과 JSON을 수시로 내려받으세요'}
 function persistSoon(){if(saveTimer)return;saveTimer=setTimeout(()=>{saveTimer=0;persist()},700)}
-function show(name){screens.forEach(s=>$('screen-'+s).classList.toggle('hidden',s!==name));window.scrollTo(0,0)}
+function show(name){screens.forEach(s=>$('screen-'+s).classList.toggle('hidden',s!==name));document.body.classList.toggle('on-trial',name==='trial');window.scrollTo(0,0)}
 function devices(){return {userAgent:navigator.userAgent,language:navigator.language,screenWidth:screen.width,screenHeight:screen.height,devicePixelRatio:devicePixelRatio,touchPoints:navigator.maxTouchPoints||0,viewportWidth:innerWidth,viewportHeight:innerHeight,protocol:location.protocol}}
 function choiceOrder(selectVal){if(selectVal==='random')return [...delayPermutations[Math.floor(Math.random()*delayPermutations.length)]];return selectVal.split(',').map(Number)}
 function makePlan(cfg){let p=[],block=0;cfg.tasks.forEach(task=>{let order=cfg.delays[block];order.forEach((delay,cidx)=>{let choices=shuffle(Array.from({length:6},(_,i)=>i));let n=cfg.mode==='quick'?1:6;choices.slice(0,n).forEach((idx,j)=>p.push({task,delayMs:delay,blockIndex:block+1,conditionIndex:cidx+1,trialInCondition:j+1,stimulusId:task==='number'?'N'+String(idx+1).padStart(2,'0'):'T'+String(idx+1).padStart(2,'0'),stimulusValue:task==='number'?digits[idx]:null,stimulusIndex:idx,sequenceIndex:p.length+1}))});block++});return p}
-function start(){if(!$('consent').checked){$('start-error').textContent='참여 동의를 확인해 주세요.';return}if(!window.PointerEvent){$('start-error').textContent='이 브라우저에서는 Pointer Events를 지원하지 않습니다. 다른 브라우저를 이용해 주세요.';return}
+function start(){const required=['adult','tablet-kind','pen-kind','tablet-freq','pen-freq'];const missing=required.find(id=>!$(id).value);if(missing){$('start-error').textContent='필수 정보를 모두 선택해 주세요.';$(missing).focus();return}if($('adult').value!=='yes'){$('start-error').textContent='본 예비실험은 만 19세 이상 성인만 참여할 수 있습니다.';$('adult').focus();return}if(!$('consent').checked){$('start-error').textContent='참여 동의를 확인해 주세요.';return}if(!window.PointerEvent){$('start-error').textContent='이 브라우저에서는 Pointer Events를 지원하지 않습니다. 다른 브라우저를 이용해 주세요.';return}
 if(data&&data.status!=='done'&&!confirm('이전 진행 기록이 있습니다. 새 실험을 시작하면 브라우저의 임시 저장 기록은 대체됩니다. 새로 시작할까요?'))return;
 const order=$('task-order').value==='random'?(Math.random()<.5?'number':'trace'):$('task-order').value;
 const cfg={mode:$('mode').value,tasks:order==='number'?['number','trace']:['trace','number'],delays:[choiceOrder($('delay-1').value),choiceOrder($('delay-2').value)],stimulusVersion:'pilot-provisional-1',postFeedbackHoldMs:POST_HOLD,sequencePolicy:'pilot-manual-or-random—not-final-counterbalancing'};
-data={schemaVersion:VERSION,participant:{id:$('pid').value.trim().replace(/[^\w-]/g,'').slice(0,55)||secureId(),ageBand:$('age').value,tabletModel:$('device').value.trim(),stylusModel:$('stylus').value.trim(),tabletFrequency:$('tablet-freq').value,stylusFrequency:$('pen-freq').value},device:devices(),config:cfg,plan:makePlan(cfg),phase:'practice-number',planIndex:0,trials:[],surveys:[],practice:[],interruptions:[],finalResponses:{},status:'in_progress',createdAt:new Date().toISOString(),lastSavedAt:null};persist();showPractice('number')}
+data={schemaVersion:VERSION,participant:{id:secureId(),adultConfirmed:true,tabletCategory:$('tablet-kind').value,tabletModel:$('device').value.trim(),stylusCategory:$('pen-kind').value,stylusModel:$('stylus').value.trim(),tabletFrequency:$('tablet-freq').value,stylusFrequency:$('pen-freq').value},device:devices(),config:cfg,plan:makePlan(cfg),phase:'practice-number',planIndex:0,trials:[],surveys:[],practice:[],interruptions:[],finalResponses:{},status:'in_progress',createdAt:new Date().toISOString(),lastSavedAt:null};persist();showPractice('number')}
 function clearTimers(){if(visualTimer)clearTimeout(visualTimer);visualTimer=0;if(holdTimer)clearTimeout(holdTimer);holdTimer=0;paintRequested=false}
 function pathPoints(index){const v=variants[index]||variants[0];const out=[];for(let i=0;i<=160;i++){let t=i/160;let warp=t+v.phase*Math.sin(Math.PI*t);let x=(.105+.79*t+v.skew*Math.sin(Math.PI*t))*W;let y=(.5+v.sign*v.amp*Math.sin(2*Math.PI*warp)+v.skew*.35*(2*t-1))*H;out.push({x,y})}return out}
 function shapePathLength(points){let d=0;for(let i=1;i<points.length;i++)d+=Math.hypot(points[i].x-points[i-1].x,points[i].y-points[i-1].y);return round(d)}
@@ -106,7 +131,7 @@ $('trial-title').textContent=spec.task==='number'?'숫자 입력 과제':'경로
 $('trial-progress').textContent=isPractice?'연습 과정':`과제 ${spec.blockIndex}/2 · 조건 ${spec.conditionIndex}/3`;
 $('trial-condition').textContent=data.config.mode==='quick'?'기능 검증 · '+spec.delayMs+'ms':'조건 수행 중';
 $('progress-bar').style.width=isPractice?'0%':`${100*(data.planIndex/data.plan.length)}%`;
-$('trial-instruction').textContent=spec.task==='number'?'위의 6자리 숫자를 손가락으로 입력하세요. 입력된 숫자는 화면에 나타나기까지 시간이 걸릴 수 있습니다.':'스타일러스로 회색 경로를 따라 시작점 S에서 종료점 E까지 그려 주세요. 선이 화면에 나타나는 시점은 늦어질 수 있습니다.';
+$('trial-instruction').textContent=spec.task==='number'?'위의 6자리 숫자를 손가락으로 입력하세요.':'터치펜으로 회색 경로를 따라 시작점 S에서 종료점 E까지 그려 주세요.';
 $('number-panel').classList.toggle('hidden',spec.task!=='number');$('trace-panel').classList.toggle('hidden',spec.task!=='trace');
 if(spec.task==='number'){ $('num-target').textContent=spec.stimulusValue;$('num-entry').innerHTML='<span class="entry-placeholder">_ _ _ _ _ _</span>'; }
 else {active.tracePath=pathPoints(spec.stimulusIndex);active.tracePathLength=shapePathLength(active.tracePath);active.traceGuideWidth=26;active.traceGates=[.16,.38,.61,.83].map(t=>active.tracePath[Math.round(160*t)]);active.traceVisible=[];requestAnimationFrame(()=>{resizeCanvas();drawPath()})}
