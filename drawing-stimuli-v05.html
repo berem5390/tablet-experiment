@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>그림 자극 6종 · 난이도 검증 v0.5</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:#1a3449;background:#f3f6f9;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.45;cursor:not-allowed}.page{max-width:1120px;margin:auto;padding:18px 18px 112px}h1{font-size:23px;line-height:1.3;margin:0}h2{font-size:18px;margin:0}.muted{color:#596f80}.small{font-size:13px;line-height:1.55}.card{background:white;border:1px solid #dbe3ea;border-radius:15px;padding:16px 18px;margin:11px 0;box-shadow:0 2px 5px #182b3b07}.top{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}.pill{display:inline-block;background:#e5f0f8;border-radius:100px;font-size:12px;color:#285b79;font-weight:700;padding:5px 10px}.btn{background:white;color:#244f68;border:1px solid #bbccd9;padding:9px 13px;border-radius:10px;min-height:42px}.primary{background:#156b8f;border-color:#156b8f;color:white;font-weight:750}.danger{background:#fff1e4;border-color:#e3ad86;color:#8c4b21;font-weight:740}.btn:hover:not(:disabled){filter:brightness(.97)}label{font-size:14px}.controls{display:flex;align-items:center;gap:11px;flex-wrap:wrap}select{border:1px solid #b6cbd9;border-radius:9px;padding:8px 10px;background:white;color:#1e425a}button:focus-visible,select:focus-visible{outline:3px solid #2394b8;outline-offset:2px}
+.stimuli-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}.stimulus{border:2px solid #d8e3eb;background:#fafcfe;border-radius:11px;padding:9px;text-align:left;color:#24465c;min-width:0}.stimulus.selected{border-color:#177ea4;background:#eaf5f9}.stimulus .id{font-size:15px;font-weight:800}.stimulus .desc{font-size:11px;line-height:1.45;color:#577083}.stimulus svg{width:100%;display:block;max-height:95px}.stimulus .tag{font-size:11px;font-weight:700;color:#925121}
+.instructions{background:#ebf4fa;border:1px solid #d0e0ea;color:#365971;border-radius:10px;padding:12px 13px;line-height:1.55;font-size:14px;margin-top:12px}.canvas-holder{border:1px solid #d0dee8;border-radius:14px;overflow:hidden;background:white;margin-top:10px}#drawCanvas{display:block;width:100%;height:auto;aspect-ratio:960/360;touch-action:none;user-select:none;-webkit-user-select:none}.legend{color:#5d7283;font-size:12px;margin:9px 0 0;line-height:1.5}.green{color:#00875f;font-weight:700}.blue{color:#216bc0;font-weight:700}.amber{color:#aa601d;font-weight:700}.status{border-radius:10px;background:#eef4f9;color:#305a74;padding:11px 13px;margin-top:11px;font-size:14px;min-height:42px}.status.good{background:#e7f5ed;color:#256b46}.status.warn{background:#fff5e9;color:#8d5a22}.edit-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px}.choice{border:1px solid #c8d6e0;color:#35576a;background:#f9fbfd;border-radius:9px;padding:9px 11px}.choice.target{border-color:#dba66e;background:#fff6e9}.choice.chosen{border-color:#0a789b;background:#e8f6fa;box-shadow:0 0 0 2px #0a789b20 inset}.target-note{font-weight:700;font-size:13px;color:#96551d}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0 0}.stat{padding:9px 10px;background:#f4f8fb;border-radius:10px}.stat b{display:block;font-size:16px}.stat span{color:#597082;font-size:11px}.results{width:100%;border-collapse:collapse;font-size:12px}.results th,.results td{padding:8px 7px;border-bottom:1px solid #dfe7ec;text-align:left;white-space:nowrap}.results th{background:#f5f9fc;color:#587181}.scroll{overflow-x:auto}.footer{position:fixed;bottom:0;left:0;right:0;padding:9px max(16px,env(safe-area-inset-left)) calc(9px + env(safe-area-inset-bottom));background:#ffffffee;border-top:1px solid #d7e1e8;backdrop-filter:blur(9px);z-index:20}.footrow{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:14px}.footrow .muted{font-size:12px}.footrow button{min-height:46px;padding:10px 19px}#eventLog{font-size:11px;line-height:1.55;white-space:pre-wrap;color:#d5e8ef;background:#1e3040;border-radius:9px;padding:12px;max-height:148px;overflow:auto}.hidden{display:none!important}
+@media(max-width:700px){.page{padding:12px 10px 116px}h1{font-size:19px}.card{padding:12px}.stimuli-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stimulus svg{max-height:70px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.footrow .muted{max-width:54%}.btn{padding:8px 10px}}
+</style>
+</head>
+<body>
+<main class="page">
+ <header class="top"><div><h1>그림 자극 6종 · 난이도 검증</h1><div class="small muted">v0.5 연구자용 시제품 · 곡선 + 평면도형 + 입체도형</div></div><span class="pill">정식 36회 실험 아님</span></header>
+ <section class="card">
+  <div class="top"><h2>자극 선택</h2><div class="controls"><label for="delay">추가 화면 지연</label><select id="delay"><option value="0">0ms</option><option value="100">100ms</option><option value="200">200ms</option></select><button class="btn" id="restart" type="button">현재 자극 다시 시작</button></div></div>
+  <div id="stimuliGrid" class="stimuli-grid"></div>
+  <div class="small muted" style="margin-top:9px">자극을 눌러 직접 시험하세요. 수정 대상은 6종에서 곡선·평면·입체 각각 2회, 좌·중·우 배치는 각각 2회씩 균형화했습니다.</div>
+ </section>
+ <section class="card">
+  <div class="top"><h2 id="stageTitle">T01 · 1단계 최초 그리기</h2><span id="stagePill" class="pill">최초 입력</span></div>
+  <div id="instructions" class="instructions">초록색 시작점에서 파란색 끝점까지 안내선을 따라 그려주세요.</div>
+  <div id="editPanel" class="edit-actions hidden"><span class="small muted">수정할 도형 선택:</span><div id="figureChoices" class="controls"></div><button type="button" class="btn danger" id="erase" disabled>선택한 도형 지우기</button></div>
+  <div class="canvas-holder"><canvas id="drawCanvas" width="960" height="360" aria-label="그림 따라 그리기 작업 공간"></canvas></div>
+  <p class="legend"><span class="green">● 초록색</span> 시작점 · <span class="blue">● 파란색</span> 끝점 · <span class="amber">주황색</span> 수정 대상 · 도형을 따라 그릴 때에는 번호 순서대로 진행하세요. 닫힌 외곽선은 초록색 테두리·파란색 중심점이 같은 시작·끝 위치입니다. 입체도형은 보이지 않는 모서리를 그리지 않습니다.</p>
+  <div id="status" class="status" role="status">첫 번째 도형을 그려 주세요.</div>
+  <div id="liveStats" class="stats"></div>
+ </section>
+ <section class="card">
+  <div class="top"><h2>검증 기록</h2><div class="controls"><button type="button" class="btn" id="downloadJson">JSON 저장</button><button type="button" class="btn" id="downloadCsv">CSV 요약 저장</button></div></div>
+  <p class="small muted">각 자극의 최초 그리기, 수정, 획 이탈·재시도 기록을 저장합니다. 다른 자극을 선택해도 현재 페이지의 완료 기록은 유지됩니다.</p>
+  <div class="scroll"><table class="results"><thead><tr><th>자극</th><th>추가 지연</th><th>수정 유형</th><th>최초 단계</th><th>수정 단계</th><th>전체 이탈 샘플</th><th>재시도</th></tr></thead><tbody id="results"><tr><td colspan="7" class="muted">아직 완료된 자극이 없습니다.</td></tr></tbody></table></div>
+  <details style="margin-top:11px"><summary class="small" style="cursor:pointer">상세 이벤트 미리보기</summary><pre id="eventLog">아직 기록 없음</pre></details>
+  <p class="small muted">입력 좌표는 즉시 기록하며 화면상의 잉크와 삭제 결과에만 지정된 추가 지연을 적용합니다. 기록된 지연은 브라우저 그리기 함수 실행 시각 기준으로, 실제 화면 광학 지연은 측정하지 않습니다. 경로 이탈은 중심선에서 14 논리 픽셀 초과로 계산하며 화면에 허용영역 띠를 표시하지 않습니다.</p>
+ </section>
+</main>
+<footer class="footer"><div class="footrow"><span class="muted" id="footText">세 도형을 차례로 완성하면 수정 단계로 이동할 수 있습니다.</span><button class="btn primary" id="next" type="button" disabled>수정 단계로</button></div></footer>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),rnd=n=>Math.round(n*10)/10,types={curve:'곡선',quad:'평면도형',solid:'입체도형'};
+const CONFIG=[
+ {id:'T01',curve:0,quad:0,solid:0,order:['curve','quad','solid'],edit:'curve'},
+ {id:'T02',curve:1,quad:1,solid:1,order:['quad','solid','curve'],edit:'quad'},
+ {id:'T03',curve:2,quad:2,solid:0,order:['solid','curve','quad'],edit:'solid'},
+ {id:'T04',curve:3,quad:3,solid:1,order:['curve','solid','quad'],edit:'solid'},
+ {id:'T05',curve:4,quad:4,solid:0,order:['quad','curve','solid'],edit:'curve'},
+ {id:'T06',curve:5,quad:5,solid:1,order:['solid','quad','curve'],edit:'quad'}
+];
+const W=960,H=360,canvas=$('drawCanvas'),ctx=canvas.getContext('2d');
+const P=(x,y)=>({x,y}),len=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),C=(a,b,c,d,t)=>{const u=1-t;return P(u*u*u*a.x+3*u*u*t*b.x+3*u*t*t*c.x+t*t*t*d.x,u*u*u*a.y+3*u*u*t*b.y+3*u*t*t*c.y+t*t*t*d.y)};
+const curves=[
+ [ [[33,241],[92,57],[185,292],[274,109]] ],
+ [ [[35,180],[75,75],[106,281],[156,177]],[[156,177],[201,57],[234,260],[271,132]] ],
+ [ [[36,117],[113,266],[187,47],[269,227]] ],
+ [ [[36,170],[82,56],[110,276],[158,183]],[[158,183],[203,65],[231,279],[271,146]] ],
+ [ [[34,249],[96,117],[140,128],[170,179]],[[170,179],[204,220],[243,172],[272,109]] ],
+ [ [[33,114],[101,44],[112,259],[164,206]],[[164,206],[200,158],[236,185],[269,245]] ]
+].map(segs=>segs.map(seg=>seg.map(([x,y])=>P(x,y))));
+const quads=[
+ [[75,102],[239,102],[239,236],[75,236]],
+ [[158,75],[261,169],[158,267],[55,169]],
+ [[108,105],[256,105],[219,239],[71,239]],
+ [[110,99],[227,99],[260,247],[77,247]],
+ [[68,111],[246,111],[246,226],[68,226]],
+ [[158,79],[257,173],[155,267],[59,173]]
+];
+const alternateQuads=[
+ [[110,96],[224,96],[257,238],[74,238]],
+ [[70,113],[252,113],[252,225],[70,225]],
+ [[159,76],[265,177],[158,270],[51,177]],
+ [[72,107],[242,107],[221,244],[100,244]],
+ [[99,94],[232,94],[254,242],[76,242]],
+ [[111,96],[239,96],[266,243],[83,243]]
+];
+function cubicGuides(idx,edited){return [curves[idx].flatMap((seg,j)=>{const local=edited?seg.map((p,k)=>{if(k===0||k===3)return p;const base=seg[0],end=seg[3],t=k/3,lineY=base.y+(end.y-base.y)*t;return P(p.x,Math.max(35,Math.min(305,2*lineY-p.y)))}):seg;return Array.from({length:81},(_,i)=>C(...local,i/80)).slice(j?1:0)})]}
+function linearGuide(pts){const output=[];for(let j=0;j<pts.length-1;j++){const a=pts[j],b=pts[j+1],n=Math.max(8,Math.ceil(len(a,b)/4));for(let i=0;i<n;i++)output.push(P(a.x+(b.x-a.x)*i/n,a.y+(b.y-a.y)*i/n))}output.push(pts[pts.length-1]);return output}
+function quadGuides(idx,edited){const v=(edited?alternateQuads:quads)[idx].map(([x,y])=>P(x,y));return [linearGuide([...v,v[0]])]}
+function solidGuides(idx,edited){
+ // 9 visible edges: front rectangle (4), roof (3), right face (2).
+ // All hidden rear/bottom edges intentionally omitted.
+ let fw=idx===0?120:145,fh=idx===0?120:101,dx=idx===0?45:43,dy=idx===0?-46:-42;
+ if(edited){fw=idx===0?144:120;fh=idx===0?100:121;dx=idx===0?43:49;dy=idx===0?-43:-46}
+ const cx=160,cy=181,ax=cx-(fw+dx)/2,ay=cy-(fh+dy)/2;
+ const A=P(ax,ay),B=P(ax+fw,ay),D=P(ax,ay+fh),Q=P(ax+fw,ay+fh);
+ const E=P(ax+dx,ay+dy),F=P(ax+fw+dx,ay+dy),G=P(ax+fw+dx,ay+dy+fh);
+ return [linearGuide([A,B,Q,D,A]),linearGuide([A,E,F,B]),linearGuide([F,G,Q])]
+}
+function geometryLength(path){let d=0;for(let i=1;i<path.length;i++)d+=len(path[i-1],path[i]);return rnd(d)}
+function shape(id,type,edited,offset){const idx=type==='curve'?id.curve:type==='quad'?id.quad:id.solid;const local=type==='curve'?cubicGuides(idx,edited):type==='quad'?quadGuides(idx,edited):solidGuides(idx,edited);const strokePaths=local.map(p=>p.map(pt=>P(pt.x+offset,pt.y)));return{type,strokes:strokePaths,length:rnd(strokePaths.reduce((s,p)=>s+geometryLength(p),0)),bbox:bounds(strokePaths.flat())}}
+function bounds(points){const xs=points.map(p=>p.x),ys=points.map(p=>p.y);return{x:Math.min(...xs),y:Math.min(...ys),maxX:Math.max(...xs),maxY:Math.max(...ys)}}
+function build(config){const figures=config.order.map((type,i)=>({...shape(config,type,false,i*320),index:i}));const editedIndex=config.order.indexOf(config.edit),replacement=shape(config,config.edit,true,editedIndex*320);return{config,figures,replacement,editedIndex,length:rnd(figures.reduce((s,f)=>s+f.length,0))}}
+const stim=CONFIG.map(build);let current=0,delayMs=0,epoch=0,pending=0,origin=performance.now(),run=null,records=[],events=[],paintQueued=false;
+function schedulePaint(){if(paintQueued)return;paintQueued=true;requestAnimationFrame(()=>{paintQueued=false;if(run)drawCanvas()})}
+function log(kind,extra={}){events.push({tMs:rnd(performance.now()-origin),stimulusId:stim[current].config.id,delayMs,phase:run?.phase??null,kind,...extra});if(events.length>80000)events.splice(0,1000);if(kind!=='ink-point-displayed'){const meaningful=events.filter(e=>e.kind!=='ink-point-displayed');$('eventLog').textContent=meaningful.slice(-13).map(e=>`${e.tMs}ms · ${e.stimulusId} · ${e.kind}`).join('\n')||'아직 기록 없음'}}
+function drawLater(kind,cb,extra={}){const token=epoch,started=performance.now();pending++;const fire=()=>{if(token!==epoch)return;cb();pending=Math.max(0,pending-1);log(kind,{actualAddedMs:rnd(performance.now()-started),...extra});if(kind==='ink-point-displayed'){schedulePaint();if(delayMs>0&&pending===0)refresh()}else refresh()};if(!delayMs)fire();else setTimeout(fire,delayMs)}
+function runStart(index){epoch++;pending=0;current=index;const m=stim[current];run={phase:1,step:0,completed:[],revised:[],editStatus:'none',selected:false,active:null,failures:0,totalError:0,totalSamples:0,stage1Start:performance.now(),stage1Ms:null,stage2Start:null,stage2Ms:null,editedDrawn:0,inkMs:0,strokeTraces:[],completedAt:null,selectionErrors:0};log('start',{geometryLength:m.length,originalLengths:m.figures.map(f=>f.length),originalStrokes:m.figures.map(f=>f.strokes.length),editType:m.config.edit,editLength:m.replacement.length});refresh();displayCards()}
+function allSlots(){const o=[];const m=stim[current];for(let i=0;i<3;i++)for(let j=0;j<m.figures[i].strokes.length;j++)o.push({figureIndex:i,strokeIndex:j,guide:m.figures[i].strokes[j],type:m.figures[i].type});return o}
+function nextGuide(){const m=stim[current];if(run.phase===1)return allSlots()[run.step]||null;if(run.editStatus==='redraw'){const guide=m.replacement.strokes[run.editedDrawn];return guide?{figureIndex:m.editedIndex,strokeIndex:run.editedDrawn,guide,type:m.config.edit}:null}return null}
+function stroke(ctxPts,color,width=4){if(!ctxPts||ctxPts.length<2)return;ctx.beginPath();ctx.moveTo(ctxPts[0].x,ctxPts[0].y);for(let i=1;i<ctxPts.length;i++)ctx.lineTo(ctxPts[i].x,ctxPts[i].y);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke()}
+function dot(p,color,r){ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='white';ctx.lineWidth=2;ctx.stroke()}
+function labels(path,active){if(!path)return;const same=len(path[0],path.at(-1))<3;if(same){dot(path[0],active?'#078b66':'#aec2c8',active?13:8);dot(path.at(-1),active?'#2877c8':'#aec2c8',active?6:4)}else{dot(path[0],active?'#078b66':'#aec2c8',active?10:5);dot(path.at(-1),active?'#2877c8':'#aec2c8',active?9:5)}}
+function rectangle(b,color){ctx.save();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.setLineDash([7,5]);ctx.strokeRect(b.x-13,b.y-13,b.maxX-b.x+26,b.maxY-b.y+26);ctx.restore()}
+function drawCanvas(){ctx.fillStyle='white';ctx.fillRect(0,0,W,H);const m=stim[current];for(let i=0;i<3;i++){const f=m.figures[i],selectedEdit=run.phase===2&&i===m.editedIndex,deleted=selectedEdit&&(run.editStatus==='redraw'||run.editStatus==='done');ctx.fillStyle='#617b8c';ctx.font='bold 15px system-ui';ctx.fillText(`${i+1}  ${types[f.type]}`,i*320+24,29);ctx.strokeStyle='#ecf1f5';if(i)ctx.strokeRect(i*320+.5,42,1,292);
+ if(run.phase===1){for(const p of f.strokes)stroke(p,'#c4d1da',6)}
+ else if(!deleted){for(let j=0;j<f.strokes.length;j++){const p=f.strokes[j];stroke(p,selectedEdit?'#e9ad73':'#c5d2da',selectedEdit?8:5)}}
+ if(run.phase===2&&selectedEdit&&!deleted){rectangle(f.bbox,run.selected?'#1484a8':'#de934e')}
+ for(const ink of run.completed.filter(x=>x.figureIndex===i)){if(deleted)continue;stroke(ink.visible,'#176f90',4.2)}
+ }
+ if(run.phase===2&&(run.editStatus==='redraw'||run.editStatus==='done')){for(const p of m.replacement.strokes)stroke(p,'#bdd1dd',6);for(const ink of run.revised)stroke(ink.visible,'#087f9e',4.5)}
+ const n=nextGuide();if(n&&!run.active){const nextType=run.phase===1?m.figures[n.figureIndex]:m.replacement;const p=n.guide;stroke(p,'#9fb8c9',3);labels(p,true);if(run.phase===1){ctx.fillStyle='#27627b';ctx.font='bold 14px system-ui';ctx.fillText(`현재: ${n.figureIndex+1}번 도형 · ${n.strokeIndex+1}/${nextType.strokes.length}획`,n.figureIndex*320+24,328)}}
+ if(run.active)stroke(run.active.visible,'#0583a5',5);
+}
+function nearest(p,guide){let best=1e9;for(const q of guide){const d=len(p,q);if(d<best)best=d}return best}
+function coverage(points,guide,radius=23){if(!points.length)return 0;let covered=0;for(let i=0;i<guide.length;i+=2){let good=false;for(const p of points){if(len(p,guide[i])<=radius){good=true;break}}if(good)covered++}return covered/Math.ceil(guide.length/2)}
+function pFromEvent(e){const r=canvas.getBoundingClientRect();return P(Math.max(0,Math.min(W,(e.clientX-r.left)*W/r.width)),Math.max(0,Math.min(H,(e.clientY-r.top)*H/r.height)))}
+function currentStrokeNumber(){const n=nextGuide();return n?`${n.figureIndex+1}-${n.strokeIndex+1}`:'none'}
+function chooseFigure(index){if(run.phase!==2||run.editStatus!=='select')return;const m=stim[current];if(index!==m.editedIndex){run.selectionErrors++;log('wrong-figure-selected',{figure:index+1});setStatus('주황색으로 표시된 수정 대상 도형을 선택해 주세요.','warn');return}run.selected=true;log('figure-selected',{figure:index+1,type:m.config.edit,immediate:true});refresh()}
+function down(e){if(run.phase===2&&run.editStatus==='select'){e.preventDefault();const pos=pFromEvent(e),m=stim[current];let nearestFig=-1,bd=Infinity;for(let i=0;i<3;i++){for(const path of m.figures[i].strokes){const d=nearest(pos,path);if(d<bd){nearestFig=i;bd=d}}}if(bd<43)chooseFigure(nearestFig);else setStatus('주황색 도형의 선 가까이를 터치해 선택해 주세요.','warn');return}
+ const n=nextGuide();if(!n||run.active||pending>0)return;e.preventDefault();const pt=pFromEvent(e);if(len(pt,n.guide[0])>39){setStatus('현재 획의 초록색 시작점 가까이에서 시작해 주세요.','warn');log('incorrect-start',{distance:rnd(len(pt,n.guide[0]))});return}const ink={figureIndex:n.figureIndex,strokeIndex:n.strokeIndex,guide:n.guide,startAt:performance.now(),pointerId:e.pointerId,type:e.pointerType||'unknown',coords:[pt],visible:[pt],length:0,out:0,sumDev:0,samples:0,active:true};run.active=ink;try{canvas.setPointerCapture(e.pointerId)}catch(_){ }log('stroke-start',{figure:n.figureIndex+1,stroke:n.strokeIndex+1,pointer:ink.type});refresh()}
+function move(e){const ink=run.active;if(!ink||e.pointerId!==ink.pointerId)return;e.preventDefault();const pt=pFromEvent(e),last=ink.coords.at(-1),d=len(pt,last);if(d<1.7)return;ink.coords.push(pt);ink.length+=d;const deviation=nearest(pt,ink.guide);ink.sumDev+=deviation;ink.samples++;if(deviation>14)ink.out++;const stamp=rnd(performance.now()-origin);drawLater('ink-point-displayed',()=>{if(ink.active||ink.saved)ink.visible.push(pt)},{stamp,figure:ink.figureIndex+1,stroke:ink.strokeIndex+1})}
+function up(e){const ink=run.active;if(!ink||e.pointerId!==ink.pointerId)return;e.preventDefault();try{canvas.releasePointerCapture(e.pointerId)}catch(_){ }run.active=null;const p=pFromEvent(e),endDistance=len(p,ink.guide.at(-1)),cvg=coverage(ink.coords,ink.guide),goalLen=geometryLength(ink.guide),valid=e.type!=='pointercancel'&&endDistance<=39&&ink.length>=goalLen*.56&&cvg>=.59;ink.active=false;ink.saved=valid;
+ const detail={figure:ink.figureIndex+1,type:stim[current].figures[ink.figureIndex].type,stroke:ink.strokeIndex+1,length:rnd(ink.length),targetLength:goalLen,coverage:rnd(cvg),outFraction:ink.samples?rnd(ink.out/ink.samples):0,meanDeviation:ink.samples?rnd(ink.sumDev/ink.samples):null,endDistance:rnd(endDistance),durationMs:rnd(performance.now()-ink.startAt),pointerType:ink.type};
+ if(valid){if(run.phase===1){run.completed.push(ink);run.step++;if(run.step===allSlots().length)run.stage1Ms=rnd(performance.now()-run.stage1Start)}else{run.revised.push(ink);run.editedDrawn++;if(run.editedDrawn===stim[current].replacement.strokes.length){run.editStatus='done';run.stage2Ms=rnd(performance.now()-run.stage2Start)}}run.totalError+=ink.out;run.totalSamples+=ink.samples;run.strokeTraces.push({...detail,phase:run.phase,coords:ink.coords.map(q=>[rnd(q.x),rnd(q.y)])});log('stroke-accepted',detail)}else{run.failures++;log('stroke-rejected',{...detail,reason:!cvg||cvg<.59?'path-coverage':endDistance>39?'endpoint':ink.length<goalLen*.56?'short':'cancel'});setStatus('경로를 충분히 따라 그리지 않았거나 끝점에 도달하지 못했습니다. 같은 획을 다시 그려주세요.','warn')}
+ refresh()}
+function erase(){if(run.phase!==2||!run.selected||run.editStatus!=='select'||pending>0)return;run.editStatus='deleting';log('figure-delete-request',{type:stim[current].config.edit});drawLater('figure-delete-displayed',()=>{run.editStatus='redraw';run.selected=false},{type:stim[current].config.edit});refresh()}
+function setStatus(msg,style=''){const e=$('status');e.textContent=msg;e.className='status'+(style?' '+style:'')}
+function refresh(){const m=stim[current];$('stageTitle').textContent=`${m.config.id} · ${run.phase}단계 ${run.phase===1?'최초 그리기':'수정'}`;$('stagePill').textContent=run.phase===1?'최초 입력':'도형 선택·삭제·재그리기';$('editPanel').classList.toggle('hidden',run.phase!==2||run.editStatus==='redraw'||run.editStatus==='done');
+ const actions=$('figureChoices');actions.replaceChildren();if(run.phase===2){for(let i=0;i<3;i++){const f=m.figures[i],b=document.createElement('button');b.type='button';b.className='choice'+(i===m.editedIndex?' target':'')+(run.selected&&i===m.editedIndex?' chosen':'');b.textContent=`${i+1} ${types[f.type]}${i===m.editedIndex?' (수정 대상)':''}`;b.disabled=run.editStatus!=='select';b.onclick=()=>chooseFigure(i);actions.append(b)}}
+ $('erase').disabled=!(run.phase===2&&run.editStatus==='select'&&run.selected&&pending===0);
+ const ready1=run.phase===1&&run.step===allSlots().length&&pending===0,ready2=run.phase===2&&run.editStatus==='done'&&pending===0;
+ $('next').disabled=!(ready1||ready2);$('next').textContent=run.phase===1?'수정 단계로':'다음 자극으로';$('footText').textContent=run.phase===1?'모든 도형을 왼쪽부터 그린 뒤 수정 단계로 이동하세요.':'수정 대상 선택 → 지우기 → 새 도형 그리기';
+ if(run.phase===1){$('instructions').textContent='세 도형을 화면 왼쪽부터 순서대로 따라 그리세요. 입체도형은 앞면 외곽선 → 윗면 → 오른쪽 옆면의 총 3획으로 나누어 그립니다. 초록색 시작점부터 파란색 끝점까지 이어서 그리세요.';
+ if(ready1)setStatus('세 도형을 완성했습니다. 아래 ‘수정 단계로’를 누르세요.','good');else if(pending>0)setStatus('그린 선이 화면에 표시되는 중입니다.','');else{const n=nextGuide();setStatus(n?`${n.figureIndex+1}번 ${types[n.type]}의 ${n.strokeIndex+1}번째 획을 따라 그려 주세요.`:'완료를 확인 중입니다.')}}
+ else if(run.editStatus==='select'){$('instructions').textContent=`주황색으로 표시된 ${types[m.config.edit]}을 직접 터치하거나 아래에서 선택한 후 ‘선택한 도형 지우기’를 누르세요.`;setStatus(run.selected?'도형이 선택됐습니다. ‘선택한 도형 지우기’를 누르세요.':'주황색 도형을 선택해 주세요.')}
+ else if(run.editStatus==='deleting'){$('instructions').textContent='삭제 결과가 화면에 표시될 때까지 기다려 주세요.';setStatus('삭제 결과 표시 중입니다.')}
+ else if(run.editStatus==='redraw'){$('instructions').textContent=`기존 ${types[m.config.edit]}이 삭제됐습니다. 새로 표시된 목표 도형을 따라 그려 주세요.`;setStatus(pending>0?'새로 그린 선이 표시되는 중입니다.':`새 ${types[m.config.edit]}의 ${run.editedDrawn+1}/${m.replacement.strokes.length}번째 획을 따라 그려 주세요.`)}
+ else{$('instructions').textContent='수정 도형이 완성됐습니다. 다음 자극으로 이동하거나 기록을 저장할 수 있습니다.';setStatus('수정 완료. 다음 자극으로 이동하세요.','good')}
+ const total=m.length,edit=m.replacement.length;const boxes=[['원래 경로 총 길이',`${Math.round(total)} px`],['수정 경로 길이',`${Math.round(edit)} px`],['원래 획 수',`${allSlots().length}획`],['현재 이탈 샘플',`${run.totalSamples?rnd(run.totalError/run.totalSamples*100):0}%`]];$('liveStats').innerHTML=boxes.map(([n,v])=>`<div class="stat"><b>${v}</b><span>${n}</span></div>`).join('');drawCanvas();}
+function next(){if($('next').disabled)return;if(run.phase===1){run.phase=2;run.editStatus='select';run.stage2Start=performance.now();log('edit-begin',{target:stim[current].config.edit});refresh();return}
+ run.completedAt=performance.now();const m=stim[current];const rec={stimulusId:m.config.id,delayMs,editType:m.config.edit,figureOrder:m.config.order,originalPathLengths:m.figures.map(f=>f.length),editPathLength:m.replacement.length,originalStrokes:m.figures.map(f=>f.strokes.length),editStrokes:m.replacement.strokes.length,stage1Ms:run.stage1Ms,stage2Ms:run.stage2Ms,overallMs:rnd(run.completedAt-run.stage1Start),outFraction:run.totalSamples?rnd(run.totalError/run.totalSamples):null,failedStrokes:run.failures,wrongSelections:run.selectionErrors,strokes:run.strokeTraces};records.push(rec);log('trial-complete',{stage1Ms:rec.stage1Ms,stage2Ms:rec.stage2Ms,failedStrokes:rec.failedStrokes});table();runStart((current+1)%stim.length);focusWorkspace()}
+function table(){if(!records.length)return;const tb=$('results');tb.replaceChildren();records.forEach(r=>{const tr=document.createElement('tr');for(const v of [r.stimulusId,`${r.delayMs}ms`,types[r.editType],`${(r.stage1Ms/1000).toFixed(1)}초`,`${(r.stage2Ms/1000).toFixed(1)}초`,`${Math.round((r.outFraction||0)*100)}%`,r.failedStrokes]){const td=document.createElement('td');td.textContent=v;tr.append(td)}tb.append(tr)})}
+function svgFor(m){let s='<svg aria-hidden="true" viewBox="0 0 960 360"><g fill="none" stroke="#94aabc" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">';for(const f of m.figures)for(const path of f.strokes)s+='<polyline points="'+path.filter((_,i)=>i%3===0||i===path.length-1).map(p=>`${rnd(p.x)},${rnd(p.y)}`).join(' ')+'"/>';s+='</g></svg>';return s}
+function focusWorkspace(){requestAnimationFrame(()=>{document.getElementById('stageTitle').scrollIntoView({behavior:'smooth',block:'start'})})}
+function displayCards(){const grid=$('stimuliGrid');grid.replaceChildren();stim.forEach((m,i)=>{const b=document.createElement('button');b.type='button';b.className='stimulus'+(i===current?' selected':'');b.innerHTML=`<div class="id">${m.config.id}</div>${svgFor(m)}<div class="desc">${m.config.order.map(t=>types[t]).join(' · ')}</div><div class="tag">수정: ${types[m.config.edit]}</div>`;b.onclick=()=>{if(i===current)return;runStart(i);focusWorkspace()};grid.append(b)})}
+function saveFile(filename,content,type){const a=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3500)}
+function exportJson(){saveFile('drawing-stimuli-v05-pilot.json',JSON.stringify({version:'0.5-stimulus-pilot',notFullExperiment:true,stimuli:stim.map(m=>({id:m.config.id,order:m.config.order,edit:m.config.edit,originalLengths:m.figures.map(f=>f.length),replacementLength:m.replacement.length})),records,events,device:{userAgent:navigator.userAgent,width:innerWidth,height:innerHeight},exportedAt:new Date().toISOString()},null,2),'application/json')}
+function exportCsv(){const head=['stimulusId','delayMs','editType','stage1Ms','stage2Ms','overallMs','outFraction','failedStrokes','wrongSelections','originalPathLengths','editPathLength'];const rows=records.map(r=>head.map(k=>{const x=r[k];return '"'+String(Array.isArray(x)?x.join('|'):x??'').replaceAll('"','""')+'"'}).join(','));saveFile('drawing-stimuli-v05-summary.csv','\uFEFF'+[head.join(','),...rows].join('\r\n'),'text/csv;charset=utf-8')}
+$('delay').onchange=e=>{delayMs=Number(e.target.value);runStart(current)};$('restart').onclick=()=>runStart(current);$('erase').onclick=erase;$('next').onclick=next;$('downloadJson').onclick=exportJson;$('downloadCsv').onclick=exportCsv;canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);runStart(0);displayCards();
+// Exposes only geometry inspection for local automated QA (no external network or storage).
+window.__stimulusQA={stim,getRun:()=>run,getCurrent:()=>current,getGuide:()=>nextGuide(),getRecords:()=>records,getPending:()=>pending};
+})();
+</script>
+</body>
+</html>
