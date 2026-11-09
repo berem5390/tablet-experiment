@@ -17,7 +17,6 @@
 .category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
 .guide-list{margin:6px 0 12px;padding-left:21px;line-height:1.65}.guide-list li{margin:3px 0}.required-mark{color:#b14d32;font-weight:800}.category-fields{border:1px solid #d9e5ec;border-radius:13px;padding:14px;display:grid;gap:13px;align-content:start;background:#fafcfd}
 .category-fields h3{border-bottom:1px solid #e3ebf1;padding-bottom:10px;margin:0;color:#215775}
-.age-field{max-width:540px}
 .digits.input .digit-box{color:#132f42;background:#fff;border-color:#96aebb}
 .digits.input .digit-box span{color:#132f42}
 .digits.input .digit-box.selected{background:#dbf2fc;border-color:#1277a0}
@@ -55,7 +54,7 @@
 #drawingPanel .drawing-board { overscroll-behavior: none; }
 </style></head><body><main class="page">
 <section class="screen active" id="screen-welcome">
-  <div class="hero"><span class="pill">v0.12 · 갤럭시 스크롤 보완</span><h1>태블릿 입력·편집 경험 연구</h1></div>
+  <div class="hero"><span class="pill">v0.13 · 갤럭시 스크롤 보완 + 연령 확인 제거</span><h1>태블릿 입력·편집 경험 연구</h1></div>
   <div class="card" id="studyInformation">
     <h2>연구 안내</h2>
     <p class="research-note">본 연구는 태블릿에서 서로 다른 입력 및 수정 과제를 수행할 때 사용자가 경험하는 불편함과 사용성을 조사하는 학부 연구 프로젝트입니다.</p>
@@ -89,7 +88,6 @@
   <div class="card">
     <h2>참가자 정보</h2><p class="small-note"><span class="required-mark">*</span> 필수 입력 항목입니다. 별도 표시가 없는 항목은 선택 사항입니다.</p>
     <div id="nextParticipantNotice" class="notice hidden">이전 참가자의 기록은 서버에 보존되었습니다. 다음 참가자는 새 참가자로 시작합니다.</div><div id="resumeBox" class="notice hidden"><strong id="resumeText">이전 기록이 있습니다.</strong><div class="actionbar"><button class="btn primary" id="resumeBtn">기존 기록 이어하기</button><button class="btn" id="existingJson">기존 JSON 저장</button><button class="btn" id="discardBtn">다음 참가자 시작</button></div></div>
-    <div class="field age-field"><label for="adult">만 19세 이상 여부 <span class="required-mark">*</span></label><select id="adult"><option value="">선택해 주세요</option><option value="yes">만 19세 이상입니다</option><option value="no">만 19세 미만입니다</option></select></div>
     <div class="category-grid">
       <div class="category-fields"><h3>태블릿</h3>
         <div class="field"><label for="tablet-kind">태블릿 종류 <span class="required-mark">*</span></label><select id="tablet-kind"><option value="">선택해 주세요</option><option value="ipad">아이패드</option><option value="galaxy">갤럭시 탭</option><option value="other">기타</option><option value="unknown">잘 모르겠음</option></select></div>
@@ -105,7 +103,7 @@
     <details><summary>도형 경로 폭 보정 (연구자 사전 확인용)</summary><p class="small muted">실제 자로 40mm가 되도록 막대를 보정하면 4mm 허용 폭을 계산합니다. 모든 참가자에게 동일한 기기 보정 절차를 적용해야 합니다.</p><div class="device-cal"><div id="measure" class="measure"></div><input id="calibration" type="range" min="105" max="220" step="1" value="151"/><span id="calValue" class="small muted"></span></div></details>
     <p id="startError" class="small" style="color:#a1453d" role="status"></p>
     <button id="startBtn" class="btn primary">동의하고 튜토리얼 시작</button>
-    <p class="small-note">v0.12 그리기 스크롤 수정입니다. 실제 참가자 모집 전 전체 기능과 기기 호환성을 확인해 주세요.</p><div id="serverStatus" class="notice hidden" role="status"></div>
+    <p class="small-note">v0.13 그리기 스크롤 수정 및 연령 확인란 제거 버전입니다. 실제 참가자 모집 전 전체 기능과 기기 호환성을 확인해 주세요.</p><div id="serverStatus" class="notice hidden" role="status"></div>
   </div>
 </section>
 <section class="screen" id="screen-brief"><div class="card"><span class="pill" id="briefTag">안내</span><h1 id="briefTitle">실험 안내</h1><p id="briefBody"></p><div id="briefSpecial" class="notice"></div><button class="btn primary" id="briefContinue" style="margin-top:18px">진행하기</button><div class="withdraw-position"><button type="button" class="withdraw-button withdraw-action">참여 철회 및 기록 삭제</button></div></div></section>
@@ -203,8 +201,8 @@ function shuffle(x){let a=[...x];for(let i=a.length-1;i>0;i--){let j=Math.floor(
 function generateNumberSpec(stimulusIndex,pair,tag){const original=NUMBER_STIMULI[stimulusIndex];const remaining=shuffle('0123456789'.split('').filter(v=>!original.includes(v)));const end=original.split('');pair.forEach((idx,j)=>end[idx]=remaining[j]);return{task:'number',id:'N'+String(stimulusIndex+1).padStart(2,'0'),initial:original,final:end.join(''),editIndices:[...pair],tag};}
 function makePlan(order,latencies){let trials=[];for(let block=0;block<2;block++){const task=order[block];for(let c=0;c<3;c++){const delayMs=latencies[c];const posPairs=shuffle(POSITION_PAIRS);const shuffledIds=shuffle([0,1,2,3,4,5]);for(let i=0;i<6;i++){let spec=task==='number'?generateNumberSpec(shuffledIds[i],posPairs[i],'trial'):{task:'drawing',id:CONFIG[shuffledIds[i]].id,tag:'trial'};spec={...spec,task,delayMs,blockIndex:block,conditionIndex:c,withinCondition:i+1,globalTrialNo:trials.length+1};trials.push(spec);}}}return trials}
 function selectArm(serverArm){return serverArm-1}
-async function beginSession(){const required=['adult','tablet-kind','pen-kind','tablet-freq','pen-freq'];const miss=required.find(id=>!$(id).value);if(miss){$('startError').textContent='필수 항목을 모두 선택해 주세요.';return}if($('adult').value!=='yes'){$('startError').textContent='이 시제품은 만 19세 이상만 참여할 수 있습니다.';return}if(!$('consent').checked||!$('dataConsent').checked){$('startError').textContent='연구 참여 및 정보 수집 동의를 각각 확인해 주세요.';return}$('startBtn').disabled=true;$('startError').textContent='서버에 참가자 배정을 요청하는 중입니다.';let allocation;try{credentialSave(accessSecret||newSecret());allocation=await api('start');if(!allocation?.arm||allocation.arm<1||allocation.arm>12)throw new Error('잘못된 배정 응답')}catch(e){$('startBtn').disabled=false;$('startError').textContent='실험 시작 실패: '+e.message;return}const arm=selectArm(allocation.arm),first=arm<6?'number':'drawing',order=first==='number'?['number','drawing']:['drawing','number'],latencies=[...PERMS[arm%6]],calibration=Number($('calibration').value);
- session={version:'0.11-final-candidate',serverUpload:true,rewardEntriesServerOnly:true,allocationMode:'supabase-balanced',serverParticipantId:allocation.id,participant:{id:newId(),adult:true,tablet: $('tablet-kind').value,tabletModel:$('device-model').value.trim(),pen:$('pen-kind').value,penModel:$('pen-model').value.trim(),tabletFrequency:$('tablet-freq').value,penFrequency:$('pen-freq').value},assignment:{arm:arm+1,taskOrder:order,latencyOrder:latencies,source:'supabase-balanced-assignment'},calibration:{referenceMm:40,barCssPx:calibration,pxPerMm:calibration/40,tunnelFullWidthMm:4},device:{userAgent:navigator.userAgent,screenWidth:screen.width,screenHeight:screen.height,dpr:devicePixelRatio,touchPoints:navigator.maxTouchPoints||0},createdAt:new Date().toISOString(),flow:'brief',tutorialOrder:order,tutorialDone:[],tutorialResults:[],plan:makePlan(order,latencies),trialIndex:0,trials:[],surveys:[],interruptions:[],lastSavedAt:null,freeResponses:null,completedAt:null};safeSave();await commitCheckpoint('initial')}
+async function beginSession(){const required=['tablet-kind','pen-kind','tablet-freq','pen-freq'];const miss=required.find(id=>!$(id).value);if(miss){$('startError').textContent='필수 항목을 모두 선택해 주세요.';return}if(!$('consent').checked||!$('dataConsent').checked){$('startError').textContent='연구 참여 및 정보 수집 동의를 각각 확인해 주세요.';return}$('startBtn').disabled=true;$('startError').textContent='서버에 참가자 배정을 요청하는 중입니다.';let allocation;try{credentialSave(accessSecret||newSecret());allocation=await api('start');if(!allocation?.arm||allocation.arm<1||allocation.arm>12)throw new Error('잘못된 배정 응답')}catch(e){$('startBtn').disabled=false;$('startError').textContent='실험 시작 실패: '+e.message;return}const arm=selectArm(allocation.arm),first=arm<6?'number':'drawing',order=first==='number'?['number','drawing']:['drawing','number'],latencies=[...PERMS[arm%6]],calibration=Number($('calibration').value);
+ session={version:'0.13-no-age',serverUpload:true,rewardEntriesServerOnly:true,allocationMode:'supabase-balanced',serverParticipantId:allocation.id,participant:{id:newId(),tablet: $('tablet-kind').value,tabletModel:$('device-model').value.trim(),pen:$('pen-kind').value,penModel:$('pen-model').value.trim(),tabletFrequency:$('tablet-freq').value,penFrequency:$('pen-freq').value},assignment:{arm:arm+1,taskOrder:order,latencyOrder:latencies,source:'supabase-balanced-assignment'},calibration:{referenceMm:40,barCssPx:calibration,pxPerMm:calibration/40,tunnelFullWidthMm:4},device:{userAgent:navigator.userAgent,screenWidth:screen.width,screenHeight:screen.height,dpr:devicePixelRatio,touchPoints:navigator.maxTouchPoints||0},createdAt:new Date().toISOString(),flow:'brief',tutorialOrder:order,tutorialDone:[],tutorialResults:[],plan:makePlan(order,latencies),trialIndex:0,trials:[],surveys:[],interruptions:[],lastSavedAt:null,freeResponses:null,completedAt:null};safeSave();await commitCheckpoint('initial')}
 function showBrief(title,body,special,action,tag){session.flow='brief';safeSave();$('briefTitle').textContent=title;$('briefBody').textContent=body;$('briefSpecial').textContent=special;$('briefTag').textContent=tag||'진행 안내';$('briefContinue').onclick=action;show('brief')}
 function showTutorialIntro(index){session.currentTutorialIndex=index;const task=session.tutorialOrder[index];const isN=task==='number';const text=isN?'손가락으로 숫자 키패드를 눌러 숫자를 입력하고, 수정할 때도 손가락으로 칸과 지우기 버튼을 눌러 주세요.':'터치펜을 사용해 S에서 T까지 도형의 경로를 따라 그리고, 수정할 때도 터치펜으로 다시 그려 주세요.';
  showBrief(`튜토리얼 ${index+1}/2 · ${isN?'숫자 입력':'그림 그리기'}`,text,'평소 사용하는 속도로 자연스럽게 수행해 주세요. 두 튜토리얼 모두 인위적인 화면 지연은 적용되지 않습니다.',()=>openSpec(isN?{...TUTORIAL_NUMBER,task:'number',delayMs:0,tag:'tutorial'}:{task:'drawing',id:'T-PRACTICE',delayMs:0,tag:'tutorial'},true),'실습형 튜토리얼')}
@@ -409,7 +407,7 @@ async function startNextParticipant(){
  session=null;run=null;epoch++;pending=0;serverQueue=Promise.resolve();
  try{localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(SECRET_KEY)}catch(e){alert('이 브라우저의 임시 기록을 초기화하지 못했습니다.');return}
  accessSecret=null;
- for(const id of ['adult','tablet-kind','tablet-freq','device-model','pen-kind','pen-freq','pen-model'])$(id).value='';
+ for(const id of ['tablet-kind','tablet-freq','device-model','pen-kind','pen-freq','pen-model'])$(id).value='';
  $('consent').checked=false;$('dataConsent').checked=false;$('rewardConsent').checked=false;$('rewardPhone').value='';
  $('startBtn').disabled=false;$('startError').textContent='';$('nextParticipantNotice').classList.remove('hidden');
  $('serverStatus').classList.add('hidden');setSavedBox();show('welcome');
